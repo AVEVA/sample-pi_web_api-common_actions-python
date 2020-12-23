@@ -53,7 +53,7 @@ jobs:
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)
 
-      - template: '/piwebapi_samples/CommonAPIActions/Python/run-tests.yml@templates'
+      - template: '/src/run-tests.yml'
         parameters:
           projectPath: $(Build.SourcesDirectory)$(projPath)
 
