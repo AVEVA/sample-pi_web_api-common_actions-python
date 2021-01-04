@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - '/src/'
+      - '/'
 
 pr:
   branches:
@@ -13,7 +13,7 @@ pr:
       - master
   paths:
     include:
-      - '/src/'
+      - '/'
 
 schedules:
   - cron: '0 0 * * 0'
@@ -33,7 +33,7 @@ resources:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml@templates'
   - name: projPath
-    value: '/src/'
+    value: '/'
   - name: CredFile
     value: test_config.ini
   - name: CredFileLibrary
@@ -53,7 +53,7 @@ jobs:
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)
 
-      - template: '/src/run-tests.yml'
+      - template: '/run-tests.yml'
         parameters:
           projectPath: $(Build.SourcesDirectory)$(projPath)
 
