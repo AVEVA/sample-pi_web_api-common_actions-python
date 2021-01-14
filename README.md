@@ -11,7 +11,7 @@ The sample code in this folder demonstrates how to utilize the PI Web API using 
 To run the sample code:
 
 - Clone the GitHub repository
-- Open the Python folder with your IDE
+- Open the "sample-pi_web_api-common_actions-python" folder with your IDE
 - Install the required modules by running the following command in the terminal: `pip install -r requirements.txt`
 - Run the application using the following command in the terminal: `python .\program.py` where `program.py` is the program you want to run. e.g `python .\create_sandbox.py`
 
@@ -34,12 +34,10 @@ USER_PASSWORD = MyUserPassword
 AUTH_TYPE = basic # Basic or Kerberos
 ```
 
-- Each test file (prefixed as "test\_..."), can be run independently or all the tests can be run in a single instance via the `run_all_tests.py` file.
+- Each test file (prefixed as "test\_..."), can be run independently or all the tests can be run in a single instance via the `run_all_tests.py` file. **Note: while the tests can be ran individually, some test database, elements, templates, and attributes created within other tests or by the create_sandbox.py script. If these structures are not in place ahead of time, the tests will not function as intended and the API requests will likely return a 404 error**
 - To run a single file, open the test file you wish to run: e.g. `.\test_batch.py`
 
 - In the terminal, navigate to the test files and use the following command to run all the tests: `python .\run_all_tests.py` or to run a test individually: `python .\test_batch_call.py`
-
-Note: The single tests may have expected configurations of PIWebAPI, this will cause the test to fail with a 404 Error if the expected configuration isn't available. See run_all_tests for the order to run the tests in.
 
 ## System Configuration
 
