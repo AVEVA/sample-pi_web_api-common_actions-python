@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.19 / 2021-01-29
+
+- Resolved typos in readme
+
 ## 1.0.18 / 2021-01-26
 
 - Updated dependencies
