@@ -1,6 +1,6 @@
 # PI Web API Python Sample
 
-**Version:** 1.0.18
+**Version:** 1.0.19
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/PI-System/osisoft.sample-pi_web_api-common_actions-python?repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2663&repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=master)
 
@@ -87,12 +87,8 @@ The functionality included with this sample includes(recommended order of execut
 - Delete the element template
 - Delete the sample database
 
-Complete dependencies listed in [DEPENDENCIES.md](DEPENDENCIES.md)
-
 ---
 
-For the main PI Web API Samples landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples-PI-System/tree/master/docs/PI-Web-API-Docs)
-
-For the main PI System Samples landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples-PI-System)
-
+For the main PI Web API Samples landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples-PI-System/tree/master/docs/PI-Web-API-Docs)  
+For the main PI System Samples landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples-PI-System)  
 For the main OSIsoft Samples landing page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
