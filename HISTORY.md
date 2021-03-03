@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.20 / 2021-03-03
+
+- Updated pipeline to reference main branch
+
 ## 1.0.19 / 2021-01-29
 
 - Resolved typos in readme
