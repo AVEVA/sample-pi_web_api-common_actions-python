@@ -2,38 +2,30 @@ trigger:
   batch: true
   branches:
     include:
-      - master
-  paths:
-    include:
-      - '/'
+      - main
 
 pr:
   branches:
     include:
-      - master
-  paths:
-    include:
-      - '/'
+      - main
 
 schedules:
   - cron: '0 0 * * 0'
     displayName: Weekly build
     branches:
       include:
-        - master
+        - main
     always: true
 
 resources:
   repositories:
-  - repository: templates
-    type: github
-    name: osisoft/OSI-Samples
-    endpoint: osisoft/OSI-Samples
+    - repository: templates
+      type: github
+      name: osisoft/OSI-Samples
+      endpoint: osisoft/OSI-Samples
 
 variables:
   - template: '/miscellaneous/build_templates/variables.yml@templates'
-  - name: projPath
-    value: '/'
   - name: CredFile
     value: test_config.ini
   - name: CredFileLibrary
@@ -51,12 +43,9 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
 
       - template: '/run-tests.yml'
         parameters:
-          projectPath: $(Build.SourcesDirectory)$(projPath)
+          projectPath: $(Build.SourcesDirectory)
 
-  - template: '/miscellaneous/build_templates/analysis.yml@templates'
-    parameters:
-      language: python
+      - template: '/miscellaneous/build_templates/analysis.yml@templates'

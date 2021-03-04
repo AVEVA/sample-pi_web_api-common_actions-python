@@ -21,4 +21,3 @@ steps:
       testResultsFormat: 'JUnit'
       testResultsFiles: '**\output.xml'
       searchFolder: ${{ parameters.projectPath }}
-      testRunTitle: 'Publish test results'
