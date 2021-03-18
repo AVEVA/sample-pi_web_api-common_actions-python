@@ -7,6 +7,7 @@
 import json
 import getpass
 import requests
+from urllib.parse import urlparse
 
 OSI_AF_ATTRIBUTE_TAG = 'OSIPythonAttributeSampleTag'
 OSI_AF_DATABASE = 'OSIPythonDatabase'
@@ -75,8 +76,13 @@ def read_attribute_snapshot(piwebapi_url, asset_server, user_name, user_password
         #  Deserialize the JSON Response
         data = json.loads(response.text)
 
+        url = urlparse(piwebapi_url + '/streams/' + data['WebId'] + '/value')
+        # Validate URL
+        assert url.scheme == 'https'
+        assert url.geturl().startswith(piwebapi_url)
+
         #  Read the single stream value
-        response = requests.get(piwebapi_url + '/streams/' + data['WebId'] + '/value',
+        response = requests.get(url.geturl(),
                                 auth=security_method, verify=False)
 
         if response.status_code == 200:
@@ -107,7 +113,13 @@ def read_attribute_stream(piwebapi_url, asset_server, user_name, user_password,
     #  Get the sample tag
     request_url = '{}/attributes?path=\\\\{}\\{}\\{}|{}'.format(
         piwebapi_url, asset_server, OSI_AF_DATABASE, OSI_AF_ELEMENT, OSI_AF_ATTRIBUTE_TAG)
-    response = requests.get(request_url, auth=security_method, verify=False)
+
+    url = urlparse(request_url)
+    # Validate URL
+    assert url.scheme == 'https'
+    assert url.geturl().startswith(piwebapi_url)
+
+    response = requests.get(url.geturl(), auth=security_method, verify=False)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -154,9 +166,14 @@ def read_attribute_selected_fields(piwebapi_url, asset_server, user_name, user_p
         #  Deserialize the JSON Response
         data = json.loads(response.text)
 
+        url = urlparse(piwebapi_url + '/streams/' + data['WebId'] +
+                       '/recorded?startTime=*-2d&selectedFields=Items.Timestamp;Items.Value')
+        # Validate URL
+        assert url.scheme == 'https'
+        assert url.geturl().startswith(piwebapi_url)
+
         #  Read a set of values and return only the specified columns
-        response = requests.get(piwebapi_url + '/streams/' + data['WebId'] +
-                                '/recorded?startTime=*-2d&selectedFields=Items.Timestamp;Items.Value',
+        response = requests.get(url.geturl(),
                                 auth=security_method, verify=False)
         if response.status_code == 200:
             print('SampleTag Values with Selected Fields')
@@ -174,7 +191,8 @@ def main():
     af_server_name = str(input('Enter the Asset Server Name: '))
     piwebapi_user = str(input('Enter the user name: '))
     piwebapi_password = str(getpass.getpass('Enter the password: '))
-    piwebapi_security_method = str(input('Enter the security method,  Basic or Kerberos:'))
+    piwebapi_security_method = str(
+        input('Enter the security method,  Basic or Kerberos:'))
     piwebapi_security_method = piwebapi_security_method.lower()
 
     read_attribute_snapshot(piwebapi_url, af_server_name, piwebapi_user, piwebapi_password,

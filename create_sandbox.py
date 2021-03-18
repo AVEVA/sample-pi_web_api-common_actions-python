@@ -11,6 +11,7 @@
 import json
 import getpass
 import requests
+from urllib.parse import urlparse
 
 from requests.auth import HTTPBasicAuth
 from requests_kerberos import HTTPKerberosAuth
@@ -78,13 +79,13 @@ def create_sandbox(piwebapi_url, asset_server, pi_server, user_name, user_passwo
     create_element(piwebapi_url, asset_server, user_name,
                    user_password, piwebapi_security_method)
     delete_element(piwebapi_url, asset_server, user_name,
-                  user_password, piwebapi_security_method)
+                   user_password, piwebapi_security_method)
     delete_template(piwebapi_url, asset_server, user_name,
-                   user_password, piwebapi_security_method)
+                    user_password, piwebapi_security_method)
     delete_category(piwebapi_url, asset_server, user_name,
-                   user_password, piwebapi_security_method)
+                    user_password, piwebapi_security_method)
     delete_database(piwebapi_url, asset_server, user_name,
-                   user_password, piwebapi_security_method)
+                    user_password, piwebapi_security_method)
 
 
 def create_database(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method):
@@ -342,8 +343,14 @@ def create_element(piwebapi_url, asset_server, user_name, user_password, piwebap
             # Get the newly created element
             request_url = '{}/elements?path=\\\\{}\\{}\\{}'.format(
                 piwebapi_url, asset_server, OSI_AF_DATABASE, OSI_AF_ELEMENT)
+            url = urlparse(request_url)
+
+            # Validate URL
+            assert url.scheme == 'https'
+            assert url.geturl().startswith(piwebapi_url)
+
             response = requests.get(
-                request_url, auth=security_method, verify=False)
+                url.geturl(), auth=security_method, verify=False)
             data = json.loads(response.text)
 
             #  Create the tags based on the template configuration
@@ -417,7 +424,13 @@ def delete_template(piwebapi_url, asset_server, user_name, user_password, piweba
     #  Get the element template
     request_url = '{}/elementtemplates?path=\\\\{}\\{}\\ElementTemplates[{}]'.format(
         piwebapi_url, asset_server, OSI_AF_DATABASE, OSI_AF_TEMPLATE)
-    response = requests.get(request_url, auth=security_method, verify=False)
+    url = urlparse(request_url)
+
+    # Validate URL
+    assert url.scheme == 'https'
+    assert url.geturl().startswith(piwebapi_url)
+
+    response = requests.get(url.geturl(), auth=security_method, verify=False)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -457,7 +470,8 @@ def delete_category(piwebapi_url, asset_server, user_name, user_password, piweba
         piwebapi_security_method, user_name, user_password)
 
     #  Get the element category
-    request_url = '{}/elementcategories?path=\\\\{}\\{}\\CategoriesElement[{}]'.format(piwebapi_url, asset_server, OSI_AF_DATABASE, OSI_AF_CATEGORY)
+    request_url = '{}/elementcategories?path=\\\\{}\\{}\\CategoriesElement[{}]'.format(
+        piwebapi_url, asset_server, OSI_AF_DATABASE, OSI_AF_CATEGORY)
     response = requests.get(request_url, auth=security_method, verify=False)
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -507,8 +521,13 @@ def delete_database(piwebapi_url, asset_server, user_name, user_password, piweba
         #  Create the header
         header = call_headers(True)
 
+        url = urlparse(piwebapi_url + '/assetdatabases/' + data['WebId'])
+        # Validate URL
+        assert url.scheme == 'https'
+        assert url.geturl().startswith(piwebapi_url)
+
         #  Delete the sample database
-        response = requests.delete(piwebapi_url + '/assetdatabases/' + data['WebId'],
+        response = requests.delete(url.geturl(),
                                    auth=security_method, verify=False, headers=header)
         if response.status_code == 204:
             print('Database {} deleted.'.format(OSI_AF_DATABASE))
@@ -529,7 +548,8 @@ def main():
     pi_server_name = str(input('Enter the PI Server Name: '))
     piwebapi_user = str(input('Enter the user name: '))
     piwebapi_password = str(getpass.getpass('Enter the password: '))
-    piwebapi_security_method = str(input('Enter the security method,  Basic or Kerberos:'))
+    piwebapi_security_method = str(
+        input('Enter the security method,  Basic or Kerberos:'))
     piwebapi_security_method = piwebapi_security_method.lower()
 
     create_sandbox(piwebapi_url, af_server_name, pi_server_name, piwebapi_user, piwebapi_password,
