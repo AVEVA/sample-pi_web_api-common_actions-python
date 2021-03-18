@@ -2,7 +2,7 @@
 
 import unittest
 
-from test_config import PIWEBAPI_URL, AF_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE
+from test_config import app_config
 
 
 class TestStringMethods(unittest.TestCase):
@@ -18,20 +18,20 @@ class TestStringMethods(unittest.TestCase):
     def test_writesinglevalue(self):
         """ Test the write_single_value method """
         from write_attributes import write_single_value
-        self.assertEqual(write_single_value(PIWEBAPI_URL,
-                                            AF_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE), 202)
+        self.assertEqual(write_single_value(app_config['url'],
+                                            app_config['af'], app_config['user'], app_config['password'], app_config['auth']), 202)
 
     def test_writedataset(self):
         """ Test the write_data_set method """
         from write_attributes import write_data_set
-        self.assertEqual(write_data_set(PIWEBAPI_URL,
-                                        AF_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE), 202)
+        self.assertEqual(write_data_set(app_config['url'],
+                                        app_config['af'], app_config['user'], app_config['password'], app_config['auth']), 202)
 
     def test_updateattributevalue(self):
         """ Test the update_attribute_value method """
         from write_attributes import update_attribute_value
-        self.assertEqual(update_attribute_value(PIWEBAPI_URL,
-                                                AF_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE), 204)
+        self.assertEqual(update_attribute_value(app_config['url'],
+                                                app_config['af'], app_config['user'], app_config['password'], app_config['auth']), 204)
 
 
 if __name__ == '__main__':

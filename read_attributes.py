@@ -7,6 +7,7 @@
 import json
 import getpass
 import requests
+from urllib.parse import urlparse
 
 OSI_AF_ATTRIBUTE_TAG = 'OSIPythonAttributeSampleTag'
 OSI_AF_DATABASE = 'OSIPythonDatabase'
@@ -76,7 +77,12 @@ def read_attribute_snapshot(piwebapi_url, asset_server, user_name, user_password
         data = json.loads(response.text)
 
         #  Read the single stream value
-        response = requests.get(piwebapi_url + '/streams/' + data['WebId'] + '/value',
+        url = urlparse(piwebapi_url + '/streams/' + data['WebId'] + '/value')
+        # Validate URL
+        assert url.scheme == 'https'
+        assert url.geturl().startswith(piwebapi_url)
+
+        response = requests.get(url.geturl(),
                                 auth=security_method, verify=False)
 
         if response.status_code == 200:
@@ -174,7 +180,8 @@ def main():
     af_server_name = str(input('Enter the Asset Server Name: '))
     piwebapi_user = str(input('Enter the user name: '))
     piwebapi_password = str(getpass.getpass('Enter the password: '))
-    piwebapi_security_method = str(input('Enter the security method,  Basic or Kerberos:'))
+    piwebapi_security_method = str(
+        input('Enter the security method,  Basic or Kerberos:'))
     piwebapi_security_method = piwebapi_security_method.lower()
 
     read_attribute_snapshot(piwebapi_url, af_server_name, piwebapi_user, piwebapi_password,

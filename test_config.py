@@ -2,9 +2,10 @@ import configparser
 
 config = configparser.ConfigParser()
 config.read('test_config.ini')
-PIWEBAPI_URL = config.get('Configuration', 'PIWEBAPI_URL')
-AF_SERVER_NAME = config.get('Configuration', 'AF_SERVER_NAME')
-PI_SERVER_NAME = config.get('Configuration', 'PI_SERVER_NAME')
-USER_NAME = config.get('Configuration', 'USER_NAME')
-USER_PASSWORD = config.get('Configuration', 'USER_PASSWORD')
-AUTH_TYPE = config.get('Configuration', 'AUTH_TYPE')
+app_config = {}
+app_config['url'] = config.get('Configuration', 'PIWEBAPI_URL')
+app_config['af'] = config.get('Configuration', 'AF_SERVER_NAME')
+app_config['pi'] = config.get('Configuration', 'PI_SERVER_NAME')
+app_config['user'] = config.get('Configuration', 'USER_NAME')
+app_config['password'] = config.get('Configuration', 'USER_PASSWORD')
+app_config['auth'] = config.get('Configuration', 'AUTH_TYPE')

@@ -2,7 +2,7 @@
 
 import unittest
 
-from test_config import PIWEBAPI_URL, AF_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE
+from test_config import app_config
 
 
 class TestStringMethods(unittest.TestCase):
@@ -18,21 +18,21 @@ class TestStringMethods(unittest.TestCase):
     def test_readattributesnapshot(self):
         """ Test the read_attribute_snapshot method """
         from read_attributes import read_attribute_snapshot
-        self.assertEqual(read_attribute_snapshot(PIWEBAPI_URL,
-                                                 AF_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE), 200)
+        self.assertEqual(read_attribute_snapshot(app_config['url'],
+                                                 app_config['af'], app_config['user'], app_config['password'], app_config['auth']), 200)
 
     def test_readattributestream(self):
         """ Test the read_attribute_stream method """
         from read_attributes import read_attribute_stream
-        self.assertEqual(read_attribute_stream(PIWEBAPI_URL,
-                                               AF_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE), 200)
+        self.assertEqual(read_attribute_stream(app_config['url'],
+                                               app_config['af'], app_config['user'], app_config['password'], app_config['auth']), 200)
 
     def test_readattributeselectedfields(self):
         """ Test the read_attribute_selected_fields method """
         from read_attributes import read_attribute_selected_fields
-        self.assertEqual(read_attribute_selected_fields(PIWEBAPI_URL,
-                                                        AF_SERVER_NAME,
-                                                        USER_NAME, USER_PASSWORD, AUTH_TYPE), 200)
+        self.assertEqual(read_attribute_selected_fields(app_config['url'],
+                                                        app_config['af'],
+                                                        app_config['user'], app_config['password'], app_config['auth']), 200)
 
 
 if __name__ == '__main__':

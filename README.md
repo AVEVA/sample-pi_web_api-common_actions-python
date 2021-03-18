@@ -1,6 +1,6 @@
 # PI Web API Python Sample
 
-**Version:** 1.0.20
+**Version:** 1.0.21
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/PI-System/osisoft.sample-pi_web_api-common_actions-python?repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2663&repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=main)
 

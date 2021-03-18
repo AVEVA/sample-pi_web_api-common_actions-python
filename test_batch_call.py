@@ -2,7 +2,7 @@
 
 import unittest
 
-from test_config import PIWEBAPI_URL, AF_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE
+from test_config import app_config
 
 
 class TestStringMethods(unittest.TestCase):
@@ -17,8 +17,9 @@ class TestStringMethods(unittest.TestCase):
     def test_dobatchcall(self):
         """ Call the do_batch_call method """
         from batch_call import do_batch_call
-        self.assertEqual(do_batch_call(PIWEBAPI_URL, AF_SERVER_NAME,
-                                       USER_NAME, USER_PASSWORD, AUTH_TYPE), 207)
+        self.assertEqual(do_batch_call(app_config['url'], app_config['af'],
+                                       app_config['user'], app_config['password'], app_config['auth']), 207)
+
 
 if __name__ == '__main__':
     unittest.main()
