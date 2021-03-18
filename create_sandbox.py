@@ -354,7 +354,14 @@ def create_element(piwebapi_url, asset_server, user_name, user_password, piwebap
             data = json.loads(response.text)
 
             #  Create the tags based on the template configuration
-            response = requests.post(piwebapi_url + '/elements/' + data['WebId'] + '/config',
+            url = urlparse(piwebapi_url + '/elements/' +
+                           data['WebId'] + '/config')
+
+            # Validate URL
+            assert url.scheme == 'https'
+            assert url.geturl().startswith(piwebapi_url)
+
+            response = requests.post(url.geturl(),
                                      auth=security_method, verify=False,
                                      json={'includeChildElements': True}, headers=header)
 
@@ -443,8 +450,14 @@ def delete_template(piwebapi_url, asset_server, user_name, user_password, piweba
         #  Delete the element template
         request_url = '{}/elementtemplates/{}'.format(
             piwebapi_url, data['WebId'])
+        url = urlparse(request_url)
+
+        # Validate URL
+        assert url.scheme == 'https'
+        assert url.geturl().startswith(piwebapi_url)
+
         response = requests.delete(
-            request_url, auth=security_method, verify=False, headers=header)
+            url.geturl(), auth=security_method, verify=False, headers=header)
         if response.status_code == 204:
             print('Template {} Deleted'.format(OSI_AF_TEMPLATE))
         else:

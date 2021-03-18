@@ -157,8 +157,14 @@ def write_data_set(piwebapi_url, asset_server, user_name, user_password, piwebap
         #  Create the header
         header = call_headers(True)
 
+        url = urlparse(piwebapi_url + '/streams/' +
+                       data['WebId'] + '/recorded')
+        # Validate URL
+        assert url.scheme == 'https'
+        assert url.geturl().startswith(piwebapi_url)
+
         #  write the set of values to the tag
-        response = requests.post(piwebapi_url + '/streams/' + data['WebId'] + '/recorded',
+        response = requests.post(url.geturl(),
                                  auth=security_method, verify=False, json=dataset, headers=header)
 
         if response.status_code == 202:

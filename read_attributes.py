@@ -126,9 +126,15 @@ def read_attribute_stream(piwebapi_url, asset_server, user_name, user_password,
         #  Deserialize the JSON Response
         data = json.loads(response.text)
 
+        url = urlparse(piwebapi_url + '/streams/' + data['WebId'] +
+                       '/recorded?startTime=*-2d')
+        # Validate URL
+        assert url.scheme == 'https'
+        assert url.geturl().startswith(piwebapi_url)
+
         #  Read the set of values
-        response = requests.get(piwebapi_url + '/streams/' + data['WebId'] +
-                                '/recorded?startTime=*-2d', auth=security_method, verify=False)
+        response = requests.get(
+            url.geturl(), auth=security_method, verify=False)
 
         if response.status_code == 200:
             print('{} Values'.format(OSI_AF_ATTRIBUTE_TAG))
