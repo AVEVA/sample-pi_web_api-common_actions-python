@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.21 / 2021-03-18
+
+- Fixed potential vulnerabilities detected by static analysis
+
 ## 1.0.20 / 2021-03-03
 
 - Updated pipeline to reference main branch

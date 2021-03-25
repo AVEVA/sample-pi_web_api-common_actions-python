@@ -8,6 +8,7 @@ import json
 import getpass
 import random
 import requests
+from urllib.parse import urlparse
 
 from datetime import date, time, datetime, timedelta
 from requests.auth import HTTPBasicAuth
@@ -61,7 +62,7 @@ def create_test_data():
     today = date.today()
     midnight = time()
     timestamp = datetime.combine(today - timedelta(days=+2), midnight)
-    
+
     for index in range(100):
         requestData = {
             'Timestamp': timestamp.strftime('%Y-%m-%dT%H:%M:%SZ'),
@@ -137,7 +138,13 @@ def write_data_set(piwebapi_url, asset_server, user_name, user_password, piwebap
     # Get the sample tag
     request_url = '{}/attributes?path=\\\\{}\\{}\\{}|{}'.format(
         piwebapi_url, asset_server, OSI_AF_DATABASE, OSI_AF_ELEMENT, OSI_AF_ATTRIBUTE_TAG)
-    response = requests.get(request_url, auth=security_method, verify=False)
+    url = urlparse(request_url)
+
+    # Validate URL
+    assert url.scheme == 'https'
+    assert url.geturl().startswith(piwebapi_url)
+
+    response = requests.get(url.geturl(), auth=security_method, verify=False)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -150,8 +157,14 @@ def write_data_set(piwebapi_url, asset_server, user_name, user_password, piwebap
         #  Create the header
         header = call_headers(True)
 
+        url = urlparse(piwebapi_url + '/streams/' +
+                       data['WebId'] + '/recorded')
+        # Validate URL
+        assert url.scheme == 'https'
+        assert url.geturl().startswith(piwebapi_url)
+
         #  write the set of values to the tag
-        response = requests.post(piwebapi_url + '/streams/' + data['WebId'] + '/recorded',
+        response = requests.post(url.geturl(),
                                  auth=security_method, verify=False, json=dataset, headers=header)
 
         if response.status_code == 202:
@@ -215,7 +228,8 @@ def main():
     af_server_name = str(input('Enter the Asset Server Name: '))
     piwebapi_user = str(input('Enter the user name: '))
     piwebapi_password = str(getpass.getpass('Enter the password: '))
-    piwebapi_security_method = str(input('Enter the security method,  Basic or Kerberos:'))
+    piwebapi_security_method = str(
+        input('Enter the security method,  Basic or Kerberos:'))
     piwebapi_security_method = piwebapi_security_method.lower()
 
     # Comment the method calls below when running unit tests
