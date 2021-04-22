@@ -19,6 +19,6 @@ for endpoint in config['endpoints']:
     PI_SERVER_NAME = config.get('data-server-name')
     USER_NAME = config.get('username')
     USER_PASSWORD = config.get('password')
-    AUTH_TYPE = config.get('auth-type')
-    VERIFY_SSL = config.get('verify-ssl')
+    AUTH_TYPE = config.get('auth-type', 'kerberos')
+    VERIFY_SSL = config.get('verify-ssl', True)
     break
