@@ -19,20 +19,35 @@ To run the sample code:
 
 To run the sample tests:
 
-- The sample test is configured using the file [test_config.placeholder.ini](test_config.placeholder.ini). Before editing, rename this file to `test_config.ini`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
-- Open the test config file `test_config.ini`
+- The sample test is configured using the file [test_config.placeholder.json](test_config.placeholder.json). Before editing, rename this file to `test_config.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+- Open the test config file `test_config.json`
 - Replace the values with your system configuration.
 
 For example:
 
-```ini
-PIWEBAPI_URL = https://mydomain.com/piwebapi
-AF_SERVER_NAME = AssetServerName
-PI_SERVER_NAME = PIServerName
-USER_NAME = MyUserName # Or, 'domain\\userName'
-USER_PASSWORD = MyUserPassword
-AUTH_TYPE = basic # Basic or Kerberos
+```json
+{
+  "endpoint-type": "PI",
+  "resource": "REPLACE_WITH_PI_WEB_API_URL",
+  "data-server-name": "REPLACE_WITH_DATA_ARCHIVE_NAME",
+  "asset-server-name": "REPLACE_WITH_ASSET_FRAMEWORK_SERVER_NAME",
+  "username": "REPLACE_WITH_USERNAME",
+  "password": "REPLACE_WITH_PASSWORD",
+  "auth-type": "kerberos",
+  "verify-ssl": true
+}
 ```
+
+| Parameters                  | Required | Type           | Description                                                                                                                                                      |
+| --------------------------- | -------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| endpoint-type               | required | string         | The endpoint type. For PI this will always be "PI"                                                                                                               |
+| resource                    | required | string         | The URL of the PI Web API                                                                                                                                        |
+| data-server-name            | required | string         | The name of the PI Data Archive that is being sent to                                                                                                            |
+| asset-server-name           | required | string         | The name of the AF server that is being sent to                                                                                                                  |
+| username                    | required | string         | The username that is being used for authenticating to the PI Web API                                                                                             |
+| password                    | required | string         | The password that is being used for authenticating to the PI Web API                                                                                             |
+| auth-type                   | optional | string         | The type of authentication to use when connecting to the PI Web API. By default this is set to "kerberos"                                                        |
+| verify-ssl                  | optional | boolean        | A feature flag for verifying SSL when connecting to the PI Web API. By default this is set to true                                                               |
 
 - Each test file (prefixed as "test\_..."), can be run independently or all the tests can be run in a single instance via the `run_all_tests.py` file. **Note: while the tests can be ran individually, some test database, elements, templates, and attributes created within other tests or by the create_sandbox.py script. If these structures are not in place ahead of time, the tests will not function as intended and the API requests will likely return a 404 error**
 - To run a single file, open the test file you wish to run: e.g. `.\test_batch.py`
