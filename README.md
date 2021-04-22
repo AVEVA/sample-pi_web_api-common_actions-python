@@ -40,7 +40,7 @@ For example:
 
 | Parameters                  | Required | Type           | Description                                                                                                                                                      |
 | --------------------------- | -------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| endpoint-type               | required | string         | The endpoint type. For PI this will always be "PI"                                                                                                               |
+| endpoint-type               | required | string         | The endpoint type. For this sample it will always be "PI"                                                                                                         |
 | resource                    | required | string         | The URL of the PI Web API                                                                                                                                        |
 | data-server-name            | required | string         | The name of the PI Data Archive that is being sent to                                                                                                            |
 | asset-server-name           | required | string         | The name of the AF server that is being sent to                                                                                                                  |
