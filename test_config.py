@@ -14,11 +14,11 @@ except Exception as error:
 
 for endpoint in config['endpoints']:
   if(endpoint.get("endpoint-type").upper() == 'PI'):
-    PIWEBAPI_URL = config.get('resource')
-    AF_SERVER_NAME = config.get('asset-server-name')
-    PI_SERVER_NAME = config.get('data-server-name')
-    USER_NAME = config.get('username')
-    USER_PASSWORD = config.get('password')
-    AUTH_TYPE = config.get('auth-type', 'kerberos')
-    VERIFY_SSL = config.get('verify-ssl', True)
+    PIWEBAPI_URL = endpoint.get('resource')
+    AF_SERVER_NAME = endpoint.get('asset-server-name')
+    PI_SERVER_NAME = endpoint.get('data-server-name')
+    USER_NAME = endpoint.get('username')
+    USER_PASSWORD = endpoint.get('password')
+    AUTH_TYPE = endpoint.get('auth-type', 'kerberos')
+    VERIFY_SSL = endpoint.get('verify-ssl', True)
     break
