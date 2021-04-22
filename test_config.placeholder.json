@@ -1,0 +1,14 @@
+{
+  "endpoints": [
+    {
+      "endpoint-type": "PI",
+      "resource": "REPLACE_WITH_PI_WEB_API_URL",
+      "data-server-name": "REPLACE_WITH_DATA_ARCHIVE_NAME",
+      "asset-server-name": "REPLACE_WITH_ASSET_FRAMEWORK_SERVER_NAME",
+      "username": "REPLACE_WITH_USERNAME",
+      "password": "REPLACE_WITH_PASSWORD",
+      "auth-type": "kerberos",
+      "verify-ssl": true
+    }
+  ]
+}

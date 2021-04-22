@@ -63,7 +63,7 @@ def create_test_data():
     midnight = time()
     timestamp = datetime.combine(today - timedelta(days=+2), midnight)
 
-    for index in range(100):
+    for _ in range(100):
         requestData = {
             'Timestamp': timestamp.strftime('%Y-%m-%dT%H:%M:%SZ'),
             'Value': '{:.4f}'.format(random.random() * 10)
