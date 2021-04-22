@@ -28,7 +28,7 @@ OSI_TAG_SINUSOIDU = 'OSIPythonAttributeSinusoidU'
 
 def call_headers(include_content_type):
     """ Create API call headers
-        @includeContentType boolean:  flag determines whether or not the
+        @includeContentType boolean: Flag determines whether or not the
         content-type header is included
     """
     if include_content_type is True:
@@ -46,7 +46,7 @@ def call_headers(include_content_type):
 
 def call_security_method(security_method, user_name, user_password):
     """ Create API call security method
-        @param security_method string:  security method to use:  basic or kerberos
+        @param security_method string: Security method to use: basic or kerberos
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
     """
@@ -61,40 +61,42 @@ def call_security_method(security_method, user_name, user_password):
 
 
 def create_sandbox(piwebapi_url, asset_server, pi_server, user_name, user_password,
-                   piwebapi_security_method):
-    """ Create the sandbox.  Calls methods to create the structure needed by the other calls.
-        @param piwebapi_url string: the URL of the PI Web API
-        @param asset_server string:  Name of the Asset Server
-        @param pi_server string:  Name of the PI Server
+                   piwebapi_security_method, verify_ssl):
+    """ Create the sandbox. Calls methods to create the structure needed by the other calls.
+        @param piwebapi_url string: The URL of the PI Web API
+        @param asset_server string: Name of the Asset Server
+        @param pi_server string: Name of the PI Server
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
-        @param piwebapi_security_method string:  Security method:  basic or kerberos
+        @param piwebapi_security_method string: Security method: basic or kerberos
+        @param verify_ssl: If certificate verification will be performed
     """
     create_database(piwebapi_url, asset_server, user_name,
-                    user_password, piwebapi_security_method)
+                    user_password, piwebapi_security_method, verify_ssl)
     create_category(piwebapi_url, asset_server, user_name,
-                    user_password, piwebapi_security_method)
+                    user_password, piwebapi_security_method, verify_ssl)
     create_template(piwebapi_url, asset_server, pi_server,
-                    user_name, user_password, piwebapi_security_method)
+                    user_name, user_password, piwebapi_security_method, verify_ssl)
     create_element(piwebapi_url, asset_server, user_name,
-                   user_password, piwebapi_security_method)
+                   user_password, piwebapi_security_method, verify_ssl)
     delete_element(piwebapi_url, asset_server, user_name,
-                   user_password, piwebapi_security_method)
+                   user_password, piwebapi_security_method, verify_ssl)
     delete_template(piwebapi_url, asset_server, user_name,
-                    user_password, piwebapi_security_method)
+                    user_password, piwebapi_security_method, verify_ssl)
     delete_category(piwebapi_url, asset_server, user_name,
-                    user_password, piwebapi_security_method)
+                    user_password, piwebapi_security_method, verify_ssl)
     delete_database(piwebapi_url, asset_server, user_name,
-                    user_password, piwebapi_security_method)
+                    user_password, piwebapi_security_method, verify_ssl)
 
 
-def create_database(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method):
+def create_database(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method, verify_ssl):
     """ Create Python Web API Sample database
-        @param piwebapi_url string: the URL of the PI Web API
-        @param asset_server string:  Name of the Asset Server
+        @param piwebapi_url string: The URL of the PI Web API
+        @param asset_server string: Name of the Asset Server
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
-        @param piwebapi_security_method string:  Security method:  basic or kerberos
+        @param piwebapi_security_method string: Security method: basic or kerberos
+        @param verify_ssl: If certificate verification will be performed
     """
     print('Create Database')
 
@@ -104,7 +106,7 @@ def create_database(piwebapi_url, asset_server, user_name, user_password, piweba
 
     #  Get AF Server
     response = requests.get(piwebapi_url + '/assetservers?path=\\\\' + asset_server,
-                            auth=security_method, verify=False)
+                            auth=security_method, verify=verify_ssl)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -123,7 +125,7 @@ def create_database(piwebapi_url, asset_server, user_name, user_password, piweba
 
         #  Create the database
         response = requests.post(data['Links']['Self'] + '/assetdatabases',
-                                 auth=security_method, verify=False,
+                                 auth=security_method, verify=verify_ssl,
                                  json=request_body, headers=header)
         if response.status_code == 201:
             print('Database {} created'.format(OSI_AF_DATABASE))
@@ -136,13 +138,14 @@ def create_database(piwebapi_url, asset_server, user_name, user_password, piweba
     return response.status_code
 
 
-def create_category(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method):
+def create_category(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method, verify_ssl):
     """ Create an AF Category
-        @param piwebapi_url string: the URL of the PI Web API
-        @param asset_server string:  Name of the Asset Server
+        @param piwebapi_url string: The URL of the PI Web API
+        @param asset_server string: Name of the Asset Server
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
-        @param piwebapi_security_method string:  Security method:  basic or kerberos
+        @param piwebapi_security_method string: Security method: basic or kerberos
+        @param verify_ssl: If certificate verification will be performed
     """
     print('Create Category')
 
@@ -153,7 +156,7 @@ def create_category(piwebapi_url, asset_server, user_name, user_password, piweba
     #  Get the database
     request_url = '{}/assetdatabases?path=\\\\{}\\{}'.format(
         piwebapi_url, asset_server, OSI_AF_DATABASE)
-    response = requests.get(request_url, auth=security_method, verify=False)
+    response = requests.get(request_url, auth=security_method, verify=verify_ssl)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -171,7 +174,7 @@ def create_category(piwebapi_url, asset_server, user_name, user_password, piweba
 
         #  Create the element category
         response = requests.post(data['Links']['Self'] + '/elementcategories',
-                                 auth=security_method, verify=False, json=request_body, headers=header)
+                                 auth=security_method, verify=verify_ssl, json=request_body, headers=header)
         if response.status_code == 201:
             print('Category {} created'.format(OSI_AF_CATEGORY))
         else:
@@ -183,14 +186,15 @@ def create_category(piwebapi_url, asset_server, user_name, user_password, piweba
 
 
 def create_template(piwebapi_url, asset_server, pi_server, user_name, user_password,
-                    piwebapi_security_method):
+                    piwebapi_security_method, verify_ssl):
     """ Create an AF template
-        @param piwebapi_url string: the URL of the PI Web API
-        @param asset_server string:  Name of the Asset Server
-        @param pi_server string:  Name of the PI Server
+        @param piwebapi_url string: The URL of the PI Web API
+        @param asset_server string: Name of the Asset Server
+        @param pi_server string: Name of the PI Server
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
-        @param piwebapi_security_method string:  Security method:  basic or kerberos
+        @param piwebapi_security_method string: Security method: basic or kerberos
+        @param verify_ssl: If certificate verification will be performed
     """
     print('Create Template')
 
@@ -201,7 +205,7 @@ def create_template(piwebapi_url, asset_server, pi_server, user_name, user_passw
     #  Get the database
     request_url = '{}/assetdatabases?path=\\\\{}\\{}'.format(
         piwebapi_url, asset_server, OSI_AF_DATABASE)
-    response = requests.get(request_url, auth=security_method, verify=False)
+    response = requests.get(request_url, auth=security_method, verify=verify_ssl)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -220,7 +224,7 @@ def create_template(piwebapi_url, asset_server, pi_server, user_name, user_passw
 
         #  Create the element template
         response = requests.post(data['Links']['Self'] + '/elementtemplates', auth=security_method,
-                                 verify=False, json=request_body, headers=header)
+                                 verify=verify_ssl, json=request_body, headers=header)
 
         #  If the template was created, add attributes
         if response.status_code == 201:
@@ -230,28 +234,28 @@ def create_template(piwebapi_url, asset_server, pi_server, user_name, user_passw
             request_url = '{}/elementtemplates?path=\\\\{}\\{}\\ElementTemplates[{}]'.format(
                 piwebapi_url, asset_server, OSI_AF_DATABASE, OSI_AF_TEMPLATE)
             response = requests.get(
-                request_url, auth=security_method, verify=False)
+                request_url, auth=security_method, verify=verify_ssl)
             data = json.loads(response.text)
 
             # Add templte attributes
             response = requests.post(data['Links']['Self'] + '/attributetemplates',
-                                     auth=security_method, verify=False,
+                                     auth=security_method, verify=verify_ssl,
                                      json={'Name': 'Active', 'Description': '',
                                            'IsConfigurationItem': True, 'Type': 'Boolean'},
                                      headers=header)
             response = requests.post(data['Links']['Self'] + '/attributetemplates',
-                                     auth=security_method, verify=False,
+                                     auth=security_method, verify=verify_ssl,
                                      json={'Name': 'OS', 'Description': 'Operating System',
                                            'IsConfigurationItem': True, 'Type': 'String'},
                                      headers=header)
             response = requests.post(data['Links']['Self'] + '/attributetemplates',
-                                     auth=security_method, verify=False,
+                                     auth=security_method, verify=verify_ssl,
                                      json={'Name': 'OSVersion',
                                            'Description': 'Operating System Version',
                                            'IsConfigurationItem': True, 'Type': 'String'},
                                      headers=header)
             response = requests.post(data['Links']['Self'] + '/attributetemplates',
-                                     auth=security_method, verify=False,
+                                     auth=security_method, verify=verify_ssl,
                                      json={'Name': 'IPAddresses',
                                            'Description': 'A list of IP Addresses for all NIC',
                                            'IsConfigurationItem': True, 'Type': 'String'},
@@ -259,7 +263,7 @@ def create_template(piwebapi_url, asset_server, pi_server, user_name, user_passw
 
             # Add Sinusoid U
             response = requests.post(data['Links']['Self'] + '/attributetemplates',
-                                     auth=security_method, verify=False,
+                                     auth=security_method, verify=verify_ssl,
                                      json={'Name': OSI_TAG_SINUSOID,
                                            'Description': '', 'IsConfigurationItem': False,
                                            'Type': 'Double', 'DataReferencePlugIn': 'PI Point',
@@ -268,7 +272,7 @@ def create_template(piwebapi_url, asset_server, pi_server, user_name, user_passw
 
             # Add Sinusoid
             response = requests.post(data['Links']['Self'] + '/attributetemplates',
-                                     auth=security_method, verify=False,
+                                     auth=security_method, verify=verify_ssl,
                                      json={'Name': OSI_TAG_SINUSOIDU, 'Description': '',
                                            'IsConfigurationItem': False, 'Type': 'Double',
                                            'DataReferencePlugIn': 'PI Point',
@@ -277,7 +281,7 @@ def create_template(piwebapi_url, asset_server, pi_server, user_name, user_passw
 
             # Add the sampleTag attribute
             response = requests.post(data['Links']['Self'] + '/attributetemplates',
-                                     auth=security_method, verify=False,
+                                     auth=security_method, verify=verify_ssl,
                                      json={'Name': OSI_AF_ATTRIBUTE_TAG, 'Description': '',
                                            'IsConfigurationItem': False, 'Type': 'Double',
                                            'DataReferencePlugIn': 'PI Point',
@@ -299,13 +303,14 @@ def create_template(piwebapi_url, asset_server, pi_server, user_name, user_passw
     return response.status_code
 
 
-def create_element(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method):
+def create_element(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method, verify_ssl):
     """ Create an AF element
-        @param piwebapi_url string: the URL of the PI Web API
-        @param asset_server string:  Name of the Asset Server
+        @param piwebapi_url string: The URL of the PI Web API
+        @param asset_server string: Name of the Asset Server
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
-        @param piwebapi_security_method string:  Security method:  basic or kerberos
+        @param piwebapi_security_method string: Security method: basic or kerberos
+        @param verify_ssl: If certificate verification will be performed
     """
     print('Create Element')
 
@@ -316,7 +321,7 @@ def create_element(piwebapi_url, asset_server, user_name, user_password, piwebap
     #  Get the sample database
     request_url = '{}/assetdatabases?path=\\\\{}\\{}'.format(
         piwebapi_url, asset_server, OSI_AF_DATABASE)
-    response = requests.get(request_url, auth=security_method, verify=False)
+    response = requests.get(request_url, auth=security_method, verify=verify_ssl)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -336,7 +341,7 @@ def create_element(piwebapi_url, asset_server, user_name, user_password, piwebap
 
         #  Create the element
         response = requests.post(data['Links']['Self'] + '//elements', auth=security_method,
-                                 verify=False, json=request_body, headers=header)
+                                 verify=verify_ssl, json=request_body, headers=header)
         if response.status_code == 201:
             print('Equipment {} created'.format(OSI_AF_ELEMENT))
 
@@ -350,7 +355,7 @@ def create_element(piwebapi_url, asset_server, user_name, user_password, piwebap
             assert url.geturl().startswith(piwebapi_url)
 
             response = requests.get(
-                url.geturl(), auth=security_method, verify=False)
+                url.geturl(), auth=security_method, verify=verify_ssl)
             data = json.loads(response.text)
 
             #  Create the tags based on the template configuration
@@ -362,7 +367,7 @@ def create_element(piwebapi_url, asset_server, user_name, user_password, piwebap
             assert url.geturl().startswith(piwebapi_url)
 
             response = requests.post(url.geturl(),
-                                     auth=security_method, verify=False,
+                                     auth=security_method, verify=verify_ssl,
                                      json={'includeChildElements': True}, headers=header)
 
             print(json.dumps(json.loads(response.text), indent=4, sort_keys=True))
@@ -374,13 +379,14 @@ def create_element(piwebapi_url, asset_server, user_name, user_password, piwebap
     return response.status_code
 
 
-def delete_element(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method):
+def delete_element(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method, verify_ssl):
     """ Delete an AF element
-        @param piwebapi_url string: the URL of the PI Web API
-        @param asset_server string:  Name of the Asset Server
+        @param piwebapi_url string: The URL of the PI Web API
+        @param asset_server string: Name of the Asset Server
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
-        @param piwebapi_security_method string:  Security method:  basic or kerberos
+        @param piwebapi_security_method string: Security method: basic or kerberos
+        @param verify_ssl: If certificate verification will be performed
     """
     print('Delete Element')
 
@@ -391,7 +397,7 @@ def delete_element(piwebapi_url, asset_server, user_name, user_password, piwebap
     #  Get the element
     request_url = '{}/elements?path=\\\\{}\\{}\\{}'.format(
         piwebapi_url, asset_server, OSI_AF_DATABASE, OSI_AF_ELEMENT)
-    response = requests.get(request_url, auth=security_method, verify=False)
+    response = requests.get(request_url, auth=security_method, verify=verify_ssl)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -403,7 +409,7 @@ def delete_element(piwebapi_url, asset_server, user_name, user_password, piwebap
 
         #  Delete the element
         response = requests.delete(data['Links']['Self'], auth=security_method,
-                                   verify=False, headers=header)
+                                   verify=verify_ssl, headers=header)
         if response.status_code == 204:
             print('Element {} Deleted'.format(OSI_AF_ELEMENT))
         else:
@@ -414,13 +420,14 @@ def delete_element(piwebapi_url, asset_server, user_name, user_password, piwebap
     return response.status_code
 
 
-def delete_template(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method):
+def delete_template(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method, verify_ssl):
     """ Delete an AF template
-        @param piwebapi_url string: the URL of the PI Web API
-        @param asset_server string:  Name of the Asset Server
+        @param piwebapi_url string: The URL of the PI Web API
+        @param asset_server string: Name of the Asset Server
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
-        @param piwebapi_security_method string:  Security method:  basic or kerberos
+        @param piwebapi_security_method string: Security method: basic or kerberos
+        @param verify_ssl: If certificate verification will be performed
     """
     print('Delete Template')
 
@@ -437,7 +444,7 @@ def delete_template(piwebapi_url, asset_server, user_name, user_password, piweba
     assert url.scheme == 'https'
     assert url.geturl().startswith(piwebapi_url)
 
-    response = requests.get(url.geturl(), auth=security_method, verify=False)
+    response = requests.get(url.geturl(), auth=security_method, verify=verify_ssl)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -457,7 +464,7 @@ def delete_template(piwebapi_url, asset_server, user_name, user_password, piweba
         assert url.geturl().startswith(piwebapi_url)
 
         response = requests.delete(
-            url.geturl(), auth=security_method, verify=False, headers=header)
+            url.geturl(), auth=security_method, verify=verify_ssl, headers=header)
         if response.status_code == 204:
             print('Template {} Deleted'.format(OSI_AF_TEMPLATE))
         else:
@@ -468,13 +475,14 @@ def delete_template(piwebapi_url, asset_server, user_name, user_password, piweba
     return response.status_code
 
 
-def delete_category(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method):
+def delete_category(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method, verify_ssl):
     """ Delete an AF Category
-        @param piwebapi_url string: the URL of the PI Web API
-        @param asset_server string:  Name of the Asset Server
+        @param piwebapi_url string: The URL of the PI Web API
+        @param asset_server string: Name of the Asset Server
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
-        @param piwebapi_security_method string:  Security method:  basic or kerberos
+        @param piwebapi_security_method string: Security method: basic or kerberos
+        @param verify_ssl: If certificate verification will be performed
     """
     print('Delete Category')
 
@@ -485,7 +493,7 @@ def delete_category(piwebapi_url, asset_server, user_name, user_password, piweba
     #  Get the element category
     request_url = '{}/elementcategories?path=\\\\{}\\{}\\CategoriesElement[{}]'.format(
         piwebapi_url, asset_server, OSI_AF_DATABASE, OSI_AF_CATEGORY)
-    response = requests.get(request_url, auth=security_method, verify=False)
+    response = requests.get(request_url, auth=security_method, verify=verify_ssl)
     #  Only continue if the first request was successful
     if response.status_code == 200:
         #  Deserialize the JSON Response
@@ -496,7 +504,7 @@ def delete_category(piwebapi_url, asset_server, user_name, user_password, piweba
 
         #  Delete the element category
         response = requests.delete(data['Links']['Self'], auth=security_method,
-                                   verify=False, headers=header)
+                                   verify=verify_ssl, headers=header)
         if response.status_code == 204:
             print('Category {} deleted.'.format(OSI_AF_CATEGORY))
         else:
@@ -507,13 +515,14 @@ def delete_category(piwebapi_url, asset_server, user_name, user_password, piweba
     return response.status_code
 
 
-def delete_database(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method):
+def delete_database(piwebapi_url, asset_server, user_name, user_password, piwebapi_security_method, verify_ssl):
     """ Delete Python Web API Sample database
-        @param piwebapi_url string: the URL of the PI Web API
-        @param asset_server string:  Name of the Asset Server
+        @param piwebapi_url string: The URL of the PI Web API
+        @param asset_server string: Name of the Asset Server
         @param user_name string: The user's credentials name
         @param user_password string: The user's credentials password
-        @param piwebapi_security_method string:  Security method:  basic or kerberos
+        @param piwebapi_security_method string: Security method: basic or kerberos
+        @param verify_ssl: If certificate verification will be performed
     """
     print('Delete Database')
 
@@ -524,7 +533,7 @@ def delete_database(piwebapi_url, asset_server, user_name, user_password, piweba
     #  Get AF Server
     request_url = '{}/assetdatabases?path=\\\\{}\\{}'.format(
         piwebapi_url, asset_server, OSI_AF_DATABASE)
-    response = requests.get(request_url, auth=security_method, verify=False)
+    response = requests.get(request_url, auth=security_method, verify=verify_ssl)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -541,7 +550,7 @@ def delete_database(piwebapi_url, asset_server, user_name, user_password, piweba
 
         #  Delete the sample database
         response = requests.delete(url.geturl(),
-                                   auth=security_method, verify=False, headers=header)
+                                   auth=security_method, verify=verify_ssl, headers=header)
         if response.status_code == 204:
             print('Database {} deleted.'.format(OSI_AF_DATABASE))
         else:
@@ -555,18 +564,25 @@ def delete_database(piwebapi_url, asset_server, user_name, user_password, piweba
 
 
 def main():
-    """ Main method.  Receive user input and call the do_batch_call method """
+    """ Main method. Receive user input and call the do_batch_call method """
     piwebapi_url = str(input('Enter the PI Web API url: '))
     af_server_name = str(input('Enter the Asset Server Name: '))
     pi_server_name = str(input('Enter the PI Server Name: '))
     piwebapi_user = str(input('Enter the user name: '))
     piwebapi_password = str(getpass.getpass('Enter the password: '))
     piwebapi_security_method = str(
-        input('Enter the security method,  Basic or Kerberos:'))
+        input('Enter the security method, Basic or Kerberos: '))
     piwebapi_security_method = piwebapi_security_method.lower()
+    verify_ssl_string = str(input('Verify certificates? (Y/N): '))
+    
+    if (verify_ssl_string.upper() == "N"):
+        print('Not verifying certificates poses a security risk and is not recommended')
+        verify_ssl = False
+    else:
+        verify_ssl = True
 
     create_sandbox(piwebapi_url, af_server_name, pi_server_name, piwebapi_user, piwebapi_password,
-                   piwebapi_security_method)
+                   piwebapi_security_method, verify_ssl)
 
 
 if __name__ == '__main__':
