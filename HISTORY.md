@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.22 / 2021-03-18
+## 1.0.22 / 2021-04-23
 
 - Implement certificate validation
 
