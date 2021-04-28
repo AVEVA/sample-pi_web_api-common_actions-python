@@ -27,7 +27,6 @@ For example:
 
 ```json
 {
-  "endpoint-type": "PI",
   "resource": "REPLACE_WITH_PI_WEB_API_URL",
   "data-server-name": "REPLACE_WITH_DATA_ARCHIVE_NAME",
   "asset-server-name": "REPLACE_WITH_ASSET_FRAMEWORK_SERVER_NAME",
@@ -40,7 +39,6 @@ For example:
 
 | Parameters                  | Required | Type           | Description                                                                                                                                                      |
 | --------------------------- | -------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| endpoint-type               | required | string         | The endpoint type. For this sample it will always be "PI"                                                                                                         |
 | resource                    | required | string         | The URL of the PI Web API                                                                                                                                        |
 | data-server-name            | required | string         | The name of the PI Data Archive that is being sent to                                                                                                            |
 | asset-server-name           | required | string         | The name of the AF server that is being sent to                                                                                                                  |

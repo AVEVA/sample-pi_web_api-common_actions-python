@@ -12,13 +12,11 @@ except Exception as error:
     print(f'Could not open/read file: test_config.json')
     exit()
 
-for endpoint in config['endpoints']:
-  if(endpoint.get("endpoint-type").upper() == 'PI'):
-    PIWEBAPI_URL = endpoint.get('resource')
-    AF_SERVER_NAME = endpoint.get('asset-server-name')
-    PI_SERVER_NAME = endpoint.get('data-server-name')
-    USER_NAME = endpoint.get('username')
-    USER_PASSWORD = endpoint.get('password')
-    AUTH_TYPE = endpoint.get('auth-type', 'kerberos')
-    VERIFY_SSL = endpoint.get('verify-ssl', True)
-    break
+PIWEBAPI_URL = config.get('Resource')
+AF_SERVER_NAME = config.get('AssetServerName')
+PI_SERVER_NAME = config.get('DataServerName')
+USER_NAME = config.get('Username')
+USER_PASSWORD = config.get('Password')
+AUTH_TYPE = config.get('AuthType', 'kerberos')
+VERIFY_SSL = config.get('VerifySSL', True)
+
