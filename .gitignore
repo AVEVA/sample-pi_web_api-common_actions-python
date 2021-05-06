@@ -139,3 +139,4 @@ cython_debug/
 
 # Credential files
 test_config.ini
+test_config.json

@@ -27,9 +27,9 @@ resources:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml@templates'
   - name: CredFile
-    value: test_config.ini
+    value: test_config.json
   - name: CredFileLibrary
-    value: product-readiness.piwebapi_python.ini
+    value: product-readiness.piwebapi_python.json
   - name: analysisProject
     value: PIWebAPI_Python
 
