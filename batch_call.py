@@ -52,7 +52,7 @@ def call_security_method(security_method, user_name, user_password):
     return security_auth
 
 
-def do_batch_call(piwebapiurl, asset_server, user_name, user_password, piwebapi_security_method):
+def do_batch_call(piwebapiurl, asset_server, user_name, user_password, piwebapi_security_method, piwebapi_verify_certificate):
     """ Create and execute a PI Web API batch call
     Parameters:
         piwebapiurl: the URL of the PI Web API
@@ -60,6 +60,7 @@ def do_batch_call(piwebapiurl, asset_server, user_name, user_password, piwebapi_
         user_name:  User's credentials name
         user_password:  User's credentials password
         piwebapi_security_method:  Security method:  basic or kerberos
+        piwebapi_verify_certificate:  If certificate verification will be performed
     """
     print('doBatchCall')
 
@@ -70,7 +71,7 @@ def do_batch_call(piwebapiurl, asset_server, user_name, user_password, piwebapi_
     #  Get the sample tag
     request_url = '{}/attributes?path=\\\\{}\\{}\\{}|{}'.format(
         piwebapiurl, asset_server, OSI_AF_DATABASE, OSI_AF_ELEMENT, OSI_AF_ATTRIBUTE_TAG)
-    response = requests.get(request_url, auth=security_method, verify=False)
+    response = requests.get(request_url, auth=security_method, verify=piwebapi_verify_certificate)
 
     #  Only continue if the first request was successful
     if response.status_code == 200:
@@ -128,7 +129,7 @@ def do_batch_call(piwebapiurl, asset_server, user_name, user_password, piwebapi_
         }
 
         #  Now that we have the attribute, we need to read the stream value
-        response = requests.post(piwebapiurl + '/batch', auth=security_method, verify=False,
+        response = requests.post(piwebapiurl + '/batch', auth=security_method, verify=piwebapi_verify_certificate,
                                  json=batch_request, headers=header)
 
         if response.status_code == 207:
@@ -174,9 +175,12 @@ def main():
     piwebapi_security_method = str(
         input('Enter the security method,  Basic or Kerberos:'))
     piwebapi_security_method = piwebapi_security_method.lower()
+    piwebapi_verify_certificate = str(input('Verify certificate? (Y/N):'))
+    piwebapi_verify_certificate = False if piwebapi_security_method.lower() == 'n' else True
+
 
     do_batch_call(piwebapi_url, af_server_name, piwebapi_user, piwebapi_password,
-                  piwebapi_security_method)
+                  piwebapi_security_method, piwebapi_verify_certificate)
 
 
 if __name__ == '__main__':
