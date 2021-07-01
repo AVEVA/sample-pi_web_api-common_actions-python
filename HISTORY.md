@@ -2,7 +2,7 @@
 
 ## 1.0.23 / 2021-06-29
 
-- Add certificate validation to batch calls
+- Add option of certificate validation to batch calls
 
 ## 1.0.22 / 2021-04-23
 
