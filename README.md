@@ -1,6 +1,6 @@
 # PI Web API Python Sample
 
-**Version:** 1.0.23
+**Version:** 1.0.24
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/PI-System/osisoft.sample-pi_web_api-common_actions-python?repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2663&repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=main)
 
@@ -37,15 +37,15 @@ For example:
 }
 ```
 
-| Parameters                  | Required | Type           | Description                                                                                                                                                      |
-| --------------------------- | -------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Resource                    | required | string         | The URL of the PI Web API                                                                                                                                        |
-| DataServerName            | required | string         | The name of the PI Data Archive that is being sent to                                                                                                            |
-| AssetServerName           | required | string         | The name of the AF server that is being sent to                                                                                                                  |
-| Username                    | required | string         | The username that is being used for authenticating to the PI Web API                                                                                             |
-| Password                    | required | string         | The password that is being used for authenticating to the PI Web API                                                                                             |
-| AuthType                   | optional | string         | The type of authentication to use when connecting to the PI Web API. By default this is set to "kerberos"                                                        |
-| VerifySSL                 | optional | boolean        | A feature flag for verifying SSL when connecting to the PI Web API. By default this is set to true                                                               |
+| Parameters      | Required | Type    | Description                                                                                               |
+| --------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| Resource        | required | string  | The URL of the PI Web API                                                                                 |
+| DataServerName  | required | string  | The name of the PI Data Archive that is being sent to                                                     |
+| AssetServerName | required | string  | The name of the AF server that is being sent to                                                           |
+| Username        | required | string  | The username that is being used for authenticating to the PI Web API                                      |
+| Password        | required | string  | The password that is being used for authenticating to the PI Web API                                      |
+| AuthType        | optional | string  | The type of authentication to use when connecting to the PI Web API. By default this is set to "kerberos" |
+| VerifySSL       | optional | boolean | A feature flag for verifying SSL when connecting to the PI Web API. By default this is set to true        |
 
 - Each test file (prefixed as "test\_..."), can be run independently or all the tests can be run in a single instance via the `run_all_tests.py` file. **Note: while the tests can be ran individually, some test database, elements, templates, and attributes created within other tests or by the create_sandbox.py script. If these structures are not in place ahead of time, the tests will not function as intended and the API requests will likely return a 404 error**
 - To run a single file, open the test file you wish to run: e.g. `.\test_batch.py`

@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.24 / 2021-07-15
+
+- Updated dependencies
+
 ## 1.0.23 / 2021-06-29
 
 - Add option of certificate validation to batch calls
