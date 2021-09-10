@@ -132,5 +132,5 @@ dmypy.json
 .vscode/*
 
 # Credential Config Files
-test_config.ini
+test_config.json
 product-readiness.*

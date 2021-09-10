@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.26 / 2021-09-07
+
+- Edited gitignore
+
 ## 1.0.25 / 2021-08-10
 
 - Edited gitignore
