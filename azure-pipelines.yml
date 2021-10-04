@@ -26,10 +26,6 @@ resources:
 
 variables:
   - template: '/miscellaneous/build_templates/variables.yml@templates'
-  - name: CredFile
-    value: test_config.json
-  - name: CredFileLibrary
-    value: product-readiness.piwebapi_python.json
   - name: analysisProject
     value: PIWebAPI_Python
 
@@ -38,11 +34,15 @@ jobs:
     pool:
       name: 00-OSIManaged-Test
       demands: COMPUTERNAME -equals $(buildAgent)
+    variables:
+      - name: Resource
+        value: $(PIWebAPI)
+      - name: VerifySSL
+        value: false
     steps:
-      - template: '/miscellaneous/build_templates/config.yml@templates'
+      - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
-          fileOriginal: $(CredFile)
-          fileLibrary: $(CredFileLibrary)
+          secrets: 'PIWebAPI, DataArchiveName, AFServerName, Username, Password, AuthType'
 
       - template: '/run-tests.yml'
         parameters:
