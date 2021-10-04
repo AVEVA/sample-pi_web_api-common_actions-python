@@ -3,7 +3,7 @@ import json
 # Try to open the configuration file
 try:
     with open(
-        'test_config.json',
+        'appsettings.json',
         'r',
     ) as f:
         config = json.load(f)
@@ -13,8 +13,8 @@ except Exception as error:
     exit()
 
 PIWEBAPI_URL = config.get('Resource')
-AF_SERVER_NAME = config.get('AssetServerName')
-PI_SERVER_NAME = config.get('DataServerName')
+AF_SERVER_NAME = config.get('AFServerName')
+PI_SERVER_NAME = config.get('DataArchiveName')
 USER_NAME = config.get('Username')
 USER_PASSWORD = config.get('Password')
 AUTH_TYPE = config.get('AuthType', 'kerberos')
