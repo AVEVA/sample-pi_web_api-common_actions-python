@@ -1,6 +1,6 @@
 # PI Web API Python Sample
 
-**Version:** 1.0.26
+**Version:** 1.0.27
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/PI-System/osisoft.sample-pi_web_api-common_actions-python?repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2663&repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=main)
 
@@ -27,21 +27,21 @@ For example:
 
 ```json
 {
-  "Resource": "REPLACE_WITH_PI_WEB_API_URL",
-  "DataServerName": "REPLACE_WITH_DATA_ARCHIVE_NAME",
-  "AssetServerName": "REPLACE_WITH_ASSET_FRAMEWORK_SERVER_NAME",
-  "Username": "REPLACE_WITH_USERNAME",
-  "Password": "REPLACE_WITH_PASSWORD",
+  "Resource": "PLACEHOLDER_REPLACE_WITH_PI_WEB_API_URL",
+  "DataArchiveName": "PLACEHOLDER_REPLACE_WITH_DATA_ARCHIVE_NAME",
+  "AFServerName": "PLACEHOLDER_REPLACE_WITH_AF_SERVER_NAME",
+  "Username": "PLACEHOLDER_REPLACE_WITH_USERNAME",
+  "Password": "PLACEHOLDER_REPLACE_WITH_PASSWORD",
   "AuthType": "kerberos",
-  "VerifySLL": true
+  "VerifySSL": true
 }
 ```
 
 | Parameters      | Required | Type    | Description                                                                                               |
 | --------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------- |
 | Resource        | required | string  | The URL of the PI Web API                                                                                 |
-| DataServerName  | required | string  | The name of the PI Data Archive that is being sent to                                                     |
-| AssetServerName | required | string  | The name of the AF server that is being sent to                                                           |
+| DataArchiveName | required | string  | The name of the PI Data Archive that is being sent to                                                     |
+| AFServerName    | required | string  | The name of the AF server that is being sent to                                                           |
 | Username        | required | string  | The username that is being used for authenticating to the PI Web API                                      |
 | Password        | required | string  | The password that is being used for authenticating to the PI Web API                                      |
 | AuthType        | optional | string  | The type of authentication to use when connecting to the PI Web API. By default this is set to "kerberos" |
