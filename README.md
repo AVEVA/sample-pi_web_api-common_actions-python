@@ -19,8 +19,8 @@ To run the sample code:
 
 To run the sample tests:
 
-- The sample test is configured using the file [test_config.placeholder.json](test_config.placeholder.json). Before editing, rename this file to `test_config.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
-- Open the test config file `test_config.json`
+- The sample test is configured using the file [appsettings.placeholder.json](appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+- Open the test config file `appsettings.json`
 - Replace the values with your system configuration.
 
 For example:
