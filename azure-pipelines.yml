@@ -42,7 +42,7 @@ jobs:
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
-          secrets: 'PIWebAPI, DataArchiveName, AFServerName, Username, Password, AuthType'
+          secrets: 'PIWebAPI, DataArchiveName, AFServerName, Username, Password'
 
       - template: '/run-tests.yml'
         parameters:
