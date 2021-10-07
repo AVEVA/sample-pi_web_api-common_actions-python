@@ -1,5 +1,10 @@
 # Version History
 
+## 1.0.27 / 2021-10-13
+
+- Update pipelines to use Azure Key Vault for secrets
+- Changed configuration file name and some parameter names
+
 ## 1.0.26 / 2021-09-07
 
 - Edited gitignore

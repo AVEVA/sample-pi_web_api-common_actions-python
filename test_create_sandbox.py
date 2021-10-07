@@ -2,7 +2,7 @@
 
 import unittest
 
-from test_config import PIWEBAPI_URL, AF_SERVER_NAME, PI_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE, VERIFY_SSL
+from appsettings import PIWEBAPI_URL, AF_SERVER_NAME, PI_SERVER_NAME, USER_NAME, USER_PASSWORD, AUTH_TYPE, VERIFY_SSL
 
 
 class TestStringMethods(unittest.TestCase):

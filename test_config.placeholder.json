@@ -1,9 +1,0 @@
-{
-  "Resource": "REPLACE_WITH_PI_WEB_API_URL",
-  "DataServerName": "REPLACE_WITH_DATA_ARCHIVE_NAME",
-  "AssetServerName": "REPLACE_WITH_ASSET_FRAMEWORK_SERVER_NAME",
-  "Username": "REPLACE_WITH_USERNAME",
-  "Password": "REPLACE_WITH_PASSWORD",
-  "AuthType": "kerberos",
-  "VerifySSL": true
-}
