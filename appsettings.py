@@ -9,7 +9,7 @@ try:
         config = json.load(f)
 except Exception as error:
     print(f'Error: {str(error)}')
-    print(f'Could not open/read file: test_config.json')
+    print(f'Could not open/read file: appsettings.json')
     exit()
 
 PIWEBAPI_URL = config.get('Resource')
