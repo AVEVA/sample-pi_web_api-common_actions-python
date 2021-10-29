@@ -39,6 +39,8 @@ jobs:
         value: $(PIWebAPI)
       - name: VerifySSL
         value: false
+      - name: AuthType
+        value: basic
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
