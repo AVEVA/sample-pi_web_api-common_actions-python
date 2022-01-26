@@ -2,7 +2,7 @@
 
 **Version:** 1.0.29
 
-[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/PI-System/osisoft.sample-pi_web_api-common_actions-python?repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2663&repoName=osisoft%2Fsample-pi_web_api-common_actions-python&branchName=main)
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/PI-System/aveva.sample-pi_web_api-common_actions-python?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2663&branchName=main)
 
 The sample code in this folder demonstrates how to utilize the PI Web API using Python. You must have already [installed Python](https://www.python.org/downloads/) in order to run this sample application.
 
@@ -104,4 +104,4 @@ The functionality included with this sample includes(recommended order of execut
 
 For the main PI Web API Samples landing page [ReadMe](https://github.com/osisoft/OSI-Samples-PI-System/tree/main/docs/PI-Web-API-Docs)  
 For the main PI System Samples landing page [ReadMe](https://github.com/osisoft/OSI-Samples-PI-System)  
-For the main OSIsoft Samples landing page [ReadMe](https://github.com/osisoft/OSI-Samples)
+For the main AVEVA Samples landing page [ReadMe](https://github.com/osisoft/OSI-Samples)
