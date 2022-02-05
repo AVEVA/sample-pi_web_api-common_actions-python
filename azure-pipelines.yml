@@ -36,13 +36,15 @@ variables:
 jobs:
   - job: Tests
     pool:
-      name: 00-OSIManaged-Test
-      demands: COMPUTERNAME -equals $(buildAgent)
+      name: 00-OSIManaged-Containers
+      demands: Agent.OS -equals Windows_NT
     variables:
       - name: Resource
         value: $(PIWebAPI)
       - name: VerifySSL
         value: false
+      - name: AuthType
+        value: basic
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
