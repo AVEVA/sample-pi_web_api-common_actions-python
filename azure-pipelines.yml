@@ -19,6 +19,10 @@ schedules:
 
 resources:
   repositories:
+    - repository: OpsGuildAutomationRepo
+      type: git
+      name: Engineering/OpsGuild.Automation
+      ref: refs/heads/main
     - repository: templates
       type: github
       name: osisoft/OSI-Samples
@@ -50,11 +54,6 @@ jobs:
         parameters:
           projectPath: $(Build.SourcesDirectory)
 
-  - job: Analysis
-    pool:
-      name: 00-OSIManaged-Containers
-      demands: Agent.OS -equals Windows_NT
-    steps:
-      - template: '/miscellaneous/build_templates/analysis.yml@templates'
-        parameters:
-          useRequirementsTxt: true
+  - template: '/miscellaneous/build_templates/code-analysis.yml@templates'
+    parameters:
+      useRequirementsTxt: true
