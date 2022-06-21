@@ -1,6 +1,6 @@
 # PI Web API Python Sample
 
-**Version:** 1.0.30
+**Version:** 1.0.31
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/PI-System/aveva.sample-pi_web_api-common_actions-python?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2663&branchName=main)
 
