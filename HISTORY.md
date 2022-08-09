@@ -4,6 +4,7 @@
 
 - Add dependabot.yml to automate dependency checks
 - Remove weekly tests
+- Parameterize pool and demands
 
 ## 1.0.31 / 2022-06-20
 
