@@ -35,6 +35,7 @@ variables:
 
 jobs:
   - job: Tests
+    condition: ne(variables['Build.Reason'], 'Schedule')
     pool:
       name: 00-OSIManaged-Containers
       demands: Agent.OS -equals Windows_NT
