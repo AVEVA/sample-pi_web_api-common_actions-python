@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.33 / 2022-09-17
+## 1.0.33 / 2022-08-17
 
 - Automate dependabot approval and automerge
 
