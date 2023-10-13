@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.34 / 2023-10-13
+
+- Migrate Pipelines
+
 ## 1.0.33 / 2022-08-17
 
 - Automate dependabot approval and automerge

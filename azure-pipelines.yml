@@ -21,21 +21,20 @@ resources:
   repositories:
     - repository: OpsGuildAutomationRepo
       type: git
-      name: Engineering/OpsGuild.Automation
+      name: DevOps/opsguild.automation
       ref: refs/heads/main
     - repository: templates
       type: github
-      name: osisoft/OSI-Samples
-      endpoint: osisoft/OSI-Samples
+      name: AVEVA/AVEVA-Samples
+      endpoint: AVEVA
 
 variables:
-  - template: '/miscellaneous/build_templates/variables.yml@templates'
   - name: analysisProject
     value: PIWebAPI_Python
 
 parameters:
   - name: pool
-    default: 00-OSIManaged-Containers
+    default: DevOps Managed Containers Build
   - name: containerDemands
     type: object
     default: ['Agent.OS -equals Windows_NT']
