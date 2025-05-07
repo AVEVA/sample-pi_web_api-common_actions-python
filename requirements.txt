@@ -1,2 +1,0 @@
-requests>=2.28.0
-requests_kerberos>=0.14.0
